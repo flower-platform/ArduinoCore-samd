@@ -25,6 +25,7 @@
 #include "board_driver_led.h"
 #include "sam_ba_usb.h"
 #include "sam_ba_cdc.h"
+#include "ota.h"
 
 extern uint32_t __sketch_vectors_ptr; // Exported value from linker script
 extern void board_init(void);
@@ -159,6 +160,9 @@ int main(void)
   P_USB_CDC pCdc;
 #endif
   DEBUG_PIN_HIGH;
+
+	/* OTA upload: check whether we have a new app and copy it to flash address 0x000000 */
+	check_copy_new_application();
 
   /* Jump in application if condition is satisfied */
   check_start_application();
